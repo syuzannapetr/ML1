@@ -13,4 +13,4 @@ Then, include the date in the text below the code block.
 print("Hello world!!")
 ```
 
-__Today's date is:__ `<October 9 2024>`.
+__Today's date is:__ `<October 10 2024>`.
