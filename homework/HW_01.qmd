@@ -5,12 +5,18 @@ format: html
 
 __Name:__ Syuzanna Petrosyan
 
+__Question 1:__ Use a programming language of your choice to save today’s date to a variable. Then, include the date in the text below the code block.
 
-__Question 1:__ Use a programming language of your choice to save today's date to a variable.
-Then, include the date in the text below the code block.
 
 ```{python}
-print("Hello world!!")
-```
+### your code here
+print("Hello world!")
 
-__Today's date is:__ `<October 10 2024>`.
+from datetime import date
+
+# Save today's date to variable Y
+Y = date.today()
+
+# Print the date (optional, for confirmation)
+print("Today's date is:", Y)
+```
