@@ -3,14 +3,14 @@ title: "Homework 1"
 format: html
 ---
 
-__Name:__ \<your name here\>
+__Name:__ Syuzanna Petrosyan
 
 
 __Question 1:__ Use a programming language of your choice to save today's date to a variable.
 Then, include the date in the text below the code block.
 
-```
-# your code here
+```{python}
+print("Hello world!!")
 ```
 
-Today's date is: `<your answer here>`.
+__Today's date is:__ `<October 9 2024>`.
