@@ -33,9 +33,14 @@ __1. Import the NRI data. Ensure that the [FIPS code](https://en.wikipedia.org/w
 
 ```{python}
 import pandas as pd
-#import data
-nri = pd.read_csv('data/raw/NRI_2020_US_COUNTY.csv', dtype={'STCOFIPS': str})
+import os
+os.getcwd()
+# Import and identify 'STCOFIPS' as string
+nri_data = pd.read_csv('data/raw/NRI_Table_Counties.csv', dtype={'STCOFIPS': str})
+# Check the first few rows to confirm
+print(nri_data.head())
 ```
+
 
 __2. Subset the NRI data to include only the 5-digit state/county FIPS code and all colums ending with '\_AFREQ' and '\_RISKR'. Each of these columns represents a different hazard type.__
 
