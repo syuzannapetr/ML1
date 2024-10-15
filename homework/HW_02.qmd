@@ -67,12 +67,31 @@ print(missing_values_df)
 ```
 
 __4. Create a new column in the original data table indicating whether or not 'AVLN_AFREQ' is missing or observed. Show the cross-tabulation of the 'AVLN_AFREQ' missingness and 'AVLN_RISKR' columns (including missing values). What do you observe?__
+```{python}
+# Create a new column 'AVLN_AFREQ_missing' indicating if 'AVLN_AFREQ' is missing
+nri_data['AVLN_AFREQ_missing'] = nri_data['AVLN_AFREQ'].isnull()
+# Create a cross-tabulation of 'AVLN_AFREQ_missing' and 'AVLN_RISKR', including missing values
+cross_tab = pd.crosstab(nri_data['AVLN_AFREQ_missing'], nri_data['AVLN_RISKR'], dropna=False)
+# Display the cross-tabulation
+print(cross_tab)
 ```
-# your code here
-```
+If the AVLN_AFREQ is missing, it seems that AVLN_RISKR is generally "Not Applicable," meaning that counties with missing avalanche frequency data are generally not assigned an avalanche risk rating. When the frequency data is present (AVLN_AFREQ is not missing), you see various risk levels (from "Very Low" to "Relatively High").
+
+
 __5. Assuming that a risk that is "not applicable" to a county has an annualized frequency of 0, impute the relevant missing values in the '\_AFREQ' columns with 0.__
-```
-# your code here
+```{python }
+# Identify '_AFREQ' columns
+afreq_columns = [col for col in nri_subset.columns if col.endswith('_AFREQ')]
+
+# Impute missing values in the '_AFREQ' columns with 0, where the corresponding '_RISKR' is "Not Applicable"
+for afreq_col in afreq_columns:
+    # Find the corresponding '_RISKR' column
+    riskr_col = afreq_col.replace('_AFREQ', '_RISKR')
+    # Impute missing '_AFREQ' values with 0 where '_RISKR' is "Not Applicable"
+    nri_data.loc[nri_data[riskr_col] == 'Not Applicable', afreq_col] = 0
+    
+# Verify that the imputation worked by checking the data
+print(nri_data[afreq_columns].head())
 ```
 
 
