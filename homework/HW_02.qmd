@@ -20,15 +20,21 @@ DONE
 1. Inside the 'data' folder, create a 'raw' folder.
 DONE
 1. Add and commit a '.gitignore' file to the root directory of this repository that excludes all contents of the 'data' folder.
+DONE
 1. Download the county-level NRI and SVI data for the entire United States. Place the data in the 'data/raw' folder.
+DONE
 1. In the repository README, provide a brief (1-2 sentence) description of each file in the 'data' folder and a link to the original source of the data.
+DONE
+
 
 ## Task 1 - NRI Data Cleaning
 
 __1. Import the NRI data. Ensure that the [FIPS code](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code) variable ('STCOFIPS') is correctly identified as a string / character variable. Otherwise, the leading zeros will be removed.__
 
-```
-# your code here
+```{python}
+import pandas as pd
+#import data
+nri = pd.read_csv('data/raw/NRI_2020_US_COUNTY.csv', dtype={'STCOFIPS': str})
 ```
 
 __2. Subset the NRI data to include only the 5-digit state/county FIPS code and all colums ending with '\_AFREQ' and '\_RISKR'. Each of these columns represents a different hazard type.__

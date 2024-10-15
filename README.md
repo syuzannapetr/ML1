@@ -1,1 +1,9 @@
 # ML1
+
+## Data Folder Contents
+
+**NRI_Table_Counties.csv**: This file contains [National Risk Index (NRI)](https://hazards.fema.gov/nri/)
+The National Risk Index is a county-level dataset illustrating the United States communities most at risk for 18 natural hazards, including Avalanche, Coastal Flooding, Cold Wave, Drought, Earthquake, Hail, Heat Wave, Hurricane, Ice Storm, Landslide, Lightning, Riverine Flooding, Strong Wind, Tornado, Tsunami, Volcanic Activity, Wildfire, and Winter Weather. The National Risk Index provides Risk Index scores and ratings for counties and Census tracts for all 50 states and the District of Columbia. Expected Annual Loss scores and ratings are available for all 50 states, the District of Columbia, American Samoa, Commonwealth of the Northern Mariana Islands, Guam, Puerto Rico, and the U.S. Virgin Islands. Social Vulnerability scores and ratings are available for all 50 states, the District of Columbia, and Puerto Rico. Community Resilience scores and ratings are available for all 50 states and the District of Columbia.
+
+**SVI_2022_US_county.csv**: This file contains [CDC Social Vulnerability Index (SVI)](https://www.atsdr.cdc.gov/placeandhealth/svi/index.html)
+The Centers for Disease Control and Prevention and Agency for Toxic Substances and Disease Registry Social Vulnerability Index is a place-based index and database designed to identify and quantify communities experiencing social vulnerability. The current CDC/ATSDR Social Vulnerability Index uses 16 U.S. census variables from the 5-year American Community Survey (ACS) to identify communities that may need support before, during, or after disasters. These variables are grouped into four themes that cover four major areas of social vulnerability and then combined into a single measure of overall social vulnerability.
