@@ -89,7 +89,7 @@ for afreq_col in afreq_columns:
     riskr_col = afreq_col.replace('_AFREQ', '_RISKR')
     # Impute missing '_AFREQ' values with 0 where '_RISKR' is "Not Applicable"
     nri_data.loc[nri_data[riskr_col] == 'Not Applicable', afreq_col] = 0
-    
+
 # Verify that the imputation worked by checking the data
 print(nri_data[afreq_columns].head())
 ```
@@ -98,17 +98,45 @@ print(nri_data[afreq_columns].head())
 ## Task 2 - SVI Data Cleaning
 
 __1. Import the SVI data. Ensure that the FIPS code is correctly identified as a string / character variable. Otherwise, the leading zeros will be removed.__
-__1. Subset the SVI data to include only the following columns:__
-`ST, STATE, ST_ABBR, STCNTY, COUNTY, FIPS, LOCATION, AREA_SQMI, E_TOTPOP, EP_POV150, EP_UNEMP, EP_HBURD, EP_NOHSDP, EP_UNINSUR, EP_AGE65, EP_AGE17, EP_DISABL, EP_SNGPNT, EP_LIMENG, EP_MINRTY, EP_MUNIT, EP_MOBILE, EP_CROWD, EP_NOVEH, EP_GROUPQ, EP_NOINT, EP_AFAM, EP_HISP, EP_ASIAN, EP_AIAN, EP_NHPI, EP_TWOMORE, EP_OTHERRACE`
+```{python}
+# Define the file path to the SVI data
+svi_file_path = 'data/raw/SVI_2022_US_county.csv'
+# Import the SVI data, ensuring 'FIPS' is read as a string
+svi_data = pd.read_csv(svi_file_path, dtype={'FIPS': str})
+# Check the first few rows to confirm
+print(svi_data.head())
 ```
-# your code here
-```
-__2. Create a table / dataframe that shows the number of missing values in each column.
-(Hint: if you wrote a function for Task 1, you can reuse it here.)__
 
+
+__Subset the SVI data to include only the following columns:__
+`ST, STATE, ST_ABBR, STCNTY, COUNTY, FIPS, LOCATION, AREA_SQMI, E_TOTPOP, EP_POV150, EP_UNEMP, EP_HBURD, EP_NOHSDP, EP_UNINSUR, EP_AGE65, EP_AGE17, EP_DISABL, EP_SNGPNT, EP_LIMENG, EP_MINRTY, EP_MUNIT, EP_MOBILE, EP_CROWD, EP_NOVEH, EP_GROUPQ, EP_NOINT, EP_AFAM, EP_HISP, EP_ASIAN, EP_AIAN, EP_NHPI, EP_TWOMORE, EP_OTHERRACE`
+```{python}
+# Define the columns to include in the subset
+svi_columns = [
+    'ST', 'STATE', 'ST_ABBR', 'STCNTY', 'COUNTY', 'FIPS', 'LOCATION', 'AREA_SQMI', 'E_TOTPOP', 
+    'EP_POV150', 'EP_UNEMP', 'EP_HBURD', 'EP_NOHSDP', 'EP_UNINSUR', 'EP_AGE65', 'EP_AGE17', 
+    'EP_DISABL', 'EP_SNGPNT', 'EP_LIMENG', 'EP_MINRTY', 'EP_MUNIT', 'EP_MOBILE', 'EP_CROWD', 
+    'EP_NOVEH', 'EP_GROUPQ', 'EP_NOINT', 'EP_AFAM', 'EP_HISP', 'EP_ASIAN', 'EP_AIAN', 'EP_NHPI', 
+    'EP_TWOMORE', 'EP_OTHERRACE'
+]
+# Subset the SVI data to include only these columns
+svi_subset = svi_data[svi_columns]
 ```
+
+
+__2. Create a table / dataframe that shows the number of missing values in each column. (Hint: if you wrote a function for Task 1, you can reuse it here.)__  
+```{python}
+# Calculate the number of missing values for each column
+missing_values_svi = svi_subset.isnull().sum()
+
+# Convert the result into a more readable dataframe
+missing_values_svi_df = pd.DataFrame(missing_values_svi, columns=['Missing_Values'])
+
+# Display the table of missing values
+print(missing_values_svi_df)
 # your code here
 ```
+
 
 ## Task 3 - Data Merging
 __1. Identify any FIPS codes that are present in the NRI data but not in the SVI data and vice versa. Describe any discrepancies and possible causes? What to these discrepancies, if any, mean for interpreting results based on the merged dataset moving forward?__
