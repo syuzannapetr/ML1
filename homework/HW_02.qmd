@@ -140,24 +140,62 @@ print(missing_values_svi_df)
 
 ## Task 3 - Data Merging
 __1. Identify any FIPS codes that are present in the NRI data but not in the SVI data and vice versa. Describe any discrepancies and possible causes? What to these discrepancies, if any, mean for interpreting results based on the merged dataset moving forward?__
-```
-# your code here
-```
-__2. Merge the NRI and SVI data on the FIPS code. Use an outer join to keep all counties in the final dataset.__
-```
-# your code here
-```
-__3. Create a table / dataframe that shows the number of missing values in each column of the merged dataset.__
+```{python}
+# Extract the FIPS codes from both datasets
+nri_fips = set(nri_data['STCOFIPS'])  # From NRI
+svi_fips = set(svi_subset['FIPS'])    # From SVI
 
+# Find FIPS codes present in NRI but not in SVI
+fips_in_nri_not_svi = nri_fips - svi_fips
+
+# Find FIPS codes present in SVI but not in NRI
+fips_in_svi_not_nri = svi_fips - nri_fips
+
+# Print the results
+print(f"FIPS codes in NRI but not in SVI: {len(fips_in_nri_not_svi)}")
+print(fips_in_nri_not_svi)
+
+print(f"FIPS codes in SVI but not in NRI: {len(fips_in_svi_not_nri)}")
+print(fips_in_svi_not_nri)
 ```
-# your code here
+
+The discrepancies between the FIPS codes in the NRI and SVI datasets could be due to differences in the geographic coverage of the two datasets (NRI dataset includes U.S. territories like American Samoa, Guam, the Northern Mariana Islands, Puerto Rico, and the U.S. Virgin Islands). The NRI dataset may include counties that are not present in the SVI dataset, and vice versa. These discrepancies could affect the interpretation of results based on the merged dataset, as the missing counties may introduce bias or affect the generalizability of the findings. In addition, if we’re aggregating data at a state or regional level, missing counties could skew the results. For example, if a particularly vulnerable or high-risk county is excluded from one dataset, it could lead to under- or over-estimations of risk or vulnerability at higher levels of aggregation.
+
+__2. Merge the NRI and SVI data on the FIPS code. Use an outer join to keep all counties in the final dataset.__
+```{python }
+# Merge the NRI subset and SVI subset using an outer join on the FIPS code
+merged_data = pd.merge(nri_subset, svi_subset, left_on='STCOFIPS', right_on='FIPS', how='outer')
+
+# Check the first few rows to confirm the merge
+print(merged_data.head())
 ```
+
+__3. Create a table / dataframe that shows the number of missing values in each column of the merged dataset.__
+```{python}
+# Calculate the number of missing values for each column in the merged dataset
+missing_values_merged = merged_data.isnull().sum()
+
+# Convert the result into a more readable dataframe
+missing_values_merged_df = pd.DataFrame(missing_values_merged, columns=['Missing_Values'])
+
+# Display the table of missing values
+print(missing_values_merged_df) 
+```
+
 
 ## Task 4 - Data Analysis
 
-__1. For each numerical variable in the merged dataset, plot a histogram showing the distribution of values.
-(Hint: write a function to make the histogram for a single variable, then use a loop or apply function to make the histograms for all numerical variables.)__
+__1. For each numerical variable in the merged dataset, plot a histogram showing the distribution of values. (Hint: write a function to make the histogram for a single variable, then use a loop or apply function to make the histograms for all numerical variables)__
 
-```
-# your code here
+```{python}
+import matplotlib.pyplot as plt
+# Function to plot a histogram for a given column
+def plot_histogram(column_name):
+    plt.figure(figsize=(8, 6))
+    merged_data[column_name].dropna().hist(bins=30, edgecolor='black')
+    plt.title(f'Distribution of {column_name}')
+    plt.xlabel(column_name)
+    plt.ylabel('Frequency')
+    plt.grid(False)
+    plt.show()
 ```
