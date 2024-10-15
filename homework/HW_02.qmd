@@ -44,13 +44,28 @@ print(nri_data.head())
 
 __2. Subset the NRI data to include only the 5-digit state/county FIPS code and all colums ending with '\_AFREQ' and '\_RISKR'. Each of these columns represents a different hazard type.__
 
+```{python}
+# Subsetting the NRI data to include 'STCOFIPS' and columns ending with '_AFREQ' and '_RISKR'
+subset_columns = ['STCOFIPS']  # Start with 'STCOFIPS'
+subset_columns.extend([col for col in nri_data.columns if col.endswith('_AFREQ') or col.endswith('_RISKR')])
+# Create the subset of the data
+nri_subset = nri_data[subset_columns]
+# Check the first few rows to confirm
+print(nri_subset.head())
 ```
-# your code here
-```
+
 __3. Create a table / dataframe that, for each hazard type, shows the number of missing values in the '\_AFREQ' and '\_RISKR' columns.__
+```{python}
+# Select only columns ending with '_AFREQ' and '_RISKR' from the subset
+afreq_riskr_columns = [col for col in nri_subset.columns if col.endswith('_AFREQ') or col.endswith('_RISKR')]
+# Create a dataframe to store the number of missing values for each column
+missing_values = nri_subset[afreq_riskr_columns].isnull().sum()
+# Convert the result into a more readable dataframe
+missing_values_df = pd.DataFrame(missing_values, columns=['Missing_Values'])
+# Display the missing values table
+print(missing_values_df)
 ```
-# your code here
-```
+
 __4. Create a new column in the original data table indicating whether or not 'AVLN_AFREQ' is missing or observed. Show the cross-tabulation of the 'AVLN_AFREQ' missingness and 'AVLN_RISKR' columns (including missing values). What do you observe?__
 ```
 # your code here
